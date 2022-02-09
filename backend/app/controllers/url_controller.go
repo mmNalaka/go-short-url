@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
+	"github.com/mmnalaka/go-short-url/models/urls"
 	"github.com/mmnalaka/go-short-url/pkg/utils"
 )
 
@@ -27,6 +28,8 @@ func CreteShortUrl(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("Invalid url"))
 		return
 	}
+
+	err := urls.CreateShortUrl(data.Url)
 
 	// If not, create a new short url
 	// Return the short url
