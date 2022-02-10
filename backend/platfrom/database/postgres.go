@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"log"
 
+	_ "github.com/lib/pq"
+
 	"github.com/mmnalaka/go-short-url/pkg/utils"
 )
 
@@ -37,4 +39,19 @@ func Init() {
 		panic(err)
 	}
 	log.Println("Successfully connected to database")
+}
+
+func RunMigrations() {
+	migration := `
+		CREATE TABLE IF NOT EXISTS urls (
+			id SERIAL PRIMARY KEY,
+			long_url TEXT NOT NULL,
+			short_url TEXT NOT NULL
+		);
+	`
+	_, err := Client.Exec(migration)
+	if err != nil {
+		panic(err)
+	}
+	log.Println("Successfully ran migrations")
 }

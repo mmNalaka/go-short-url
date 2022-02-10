@@ -9,12 +9,17 @@ import (
 	"github.com/mmnalaka/go-short-url/pkg/middlewares"
 	"github.com/mmnalaka/go-short-url/pkg/routes"
 	"github.com/mmnalaka/go-short-url/platfrom/cache"
+	"github.com/mmnalaka/go-short-url/platfrom/database"
 )
 
 func main() {
 	r := chi.NewRouter()
 
-	// Redis cache
+	// connect to database
+	database.Init()
+	database.RunMigrations()
+
+	// connect cache
 	cache := cache.Pool.Get()
 	defer cache.Close()
 
