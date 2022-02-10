@@ -28,8 +28,8 @@ func CreteShortUrl(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Check if url is valid
 	// Check if url is already in database
+
 	// If not, create a new short url
 	// Return the short url
 
