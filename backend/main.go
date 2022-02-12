@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
@@ -39,13 +38,6 @@ func main() {
 		}
 
 		rw.Write([]byte(value.(string)))
-	})
-
-	r.Get("/get/{id}", func(rw http.ResponseWriter, r *http.Request) {
-		id := chi.URLParam(r, "id")
-
-		value, _ := cache.Do("GET", id)
-		fmt.Printf("%s \n", value)
 	})
 
 	// Routes
