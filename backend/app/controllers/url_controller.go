@@ -29,7 +29,12 @@ func CreteShortUrl(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err := urls.CreateShortUrl(data.Url)
+	sUrl := urls.GetUrl(data.Url)
+	if sUrl != "" {
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte(sUrl))
+		return
+	}
 
 	// If not, create a new short url
 	// Return the short url

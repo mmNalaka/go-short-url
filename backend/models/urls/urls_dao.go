@@ -24,19 +24,19 @@ func (u *Url) Get() error {
 	return nil
 }
 
-func GetUrl(url string) bool {
+func GetUrl(u string) string {
 	stmt, err := database.Client.Prepare("SELECT * FROM urls WHERE LongUrl = $1")
 	if err != nil {
 		log.Println(fmt.Printf("Error when trying to prepare database statements: %s", err))
-		return false
+		return ""
 	}
 	defer stmt.Close()
 
-	result := stmt.QueryRow(url)
+	result := stmt.QueryRow(u)
+	url := Url{}
 	if err := result.Scan(&url.Id, &url.LongUrl, &url.ShortUrl); err != nil {
 		log.Println(fmt.Printf("Error when trying to query database: %s", err))
-		return false
+		return ""
 	}
-
-	return true
+	return url.ShortUrl
 }
