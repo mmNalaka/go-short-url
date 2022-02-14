@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
+	"github.com/go-chi/render"
 	"github.com/mmnalaka/go-short-url/models/urls"
 	"github.com/mmnalaka/go-short-url/pkg/utils"
 )
@@ -30,9 +31,9 @@ func CreteShortUrl(w http.ResponseWriter, r *http.Request) {
 	}
 
 	sUrl := urls.GetUrl(data.Url)
-	if sUrl != "" {
+	if sUrl != nil {
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(sUrl))
+		render.Respond(w, r, sUrl)
 		return
 	}
 
@@ -44,5 +45,5 @@ func CreteShortUrl(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(url.ShortUrl))
+	render.Respond(w, r, url)
 }
