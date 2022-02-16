@@ -36,8 +36,13 @@ func CreteShortUrl(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// If not, create a new short url
-	// Return the short url
+	url := urls.CreateUrl(data.Url)
+	if url == nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte("Error creating short url"))
+		return
+	}
 
-	w.Write([]byte(data.Url))
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte(url.ShortUrl))
 }
